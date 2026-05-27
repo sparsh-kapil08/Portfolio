@@ -18,6 +18,9 @@
   --blue: #3B9EFF;
   --blue-dim: rgba(59,158,255,0.08);
   --blue-border: rgba(59,158,255,0.2);
+  --amber: #F59E0B;
+  --amber-dim: rgba(245,158,11,0.07);
+  --amber-border: rgba(245,158,11,0.2);
   --text: #E2E8F0;
   --text-muted: #64748B;
   --text-dim: #94A3B8;
@@ -39,12 +42,10 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); }
 
-/* LAYOUT */
 .container { max-width: 860px; margin: 0 auto; padding: 0 32px; }
 
 /* NAV */
@@ -224,7 +225,7 @@ nav {
   background: var(--border);
 }
 
-/* ABOUT GRID */
+/* ABOUT */
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -234,6 +235,8 @@ nav {
 .about-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; }
 .about-text p + p { margin-top: 12px; }
 .about-text strong { color: var(--text); font-weight: 500; }
+.about-text a { color: var(--blue); }
+.about-text a:hover { text-decoration: underline; }
 
 .meta-list { display: flex; flex-direction: column; gap: 2px; }
 .meta-row {
@@ -265,10 +268,7 @@ nav {
   padding: 14px 16px;
   transition: all 0.18s;
 }
-.stack-item:hover {
-  border-color: var(--border-strong);
-  background: var(--surface2);
-}
+.stack-item:hover { border-color: var(--border-strong); background: var(--surface2); }
 .stack-name {
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -295,7 +295,6 @@ nav {
   transition: border-color 0.2s;
 }
 .project-card:hover { border-color: var(--border-strong); }
-
 .project-header {
   padding: 24px 26px 0;
   display: flex;
@@ -361,7 +360,6 @@ nav {
   flex-wrap: wrap;
   gap: 6px;
   padding: 0 26px;
-  margin-bottom: 0;
 }
 .tag {
   font-family: var(--mono);
@@ -379,6 +377,88 @@ nav {
   margin-top: 18px;
   display: flex;
   gap: 10px;
+}
+
+/* CURRENTLY LEARNING */
+.learning-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.learn-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 18px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.learn-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+}
+.learn-item.backend::before { background: var(--accent); }
+.learn-item.security::before { background: var(--blue); }
+.learn-item.dsa::before { background: var(--amber); }
+.learn-item:hover { border-color: var(--border-strong); }
+
+.learn-icon {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+.learn-item.backend .learn-icon { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+.learn-item.security .learn-icon { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+.learn-item.dsa .learn-icon { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+
+.learn-content { flex: 1; min-width: 0; }
+.learn-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.learn-source {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.learn-bar-wrap {
+  height: 3px;
+  background: var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.learn-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+.learn-item.backend .learn-bar { background: var(--accent); }
+.learn-item.security .learn-bar { background: var(--blue); }
+.learn-item.dsa .learn-bar { background: var(--amber); }
+.learn-pct {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 5px;
 }
 
 /* CERTS */
@@ -404,11 +484,12 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  flex-shrink: 0;
   font-family: var(--mono);
+  font-size: 0.75rem;
   color: var(--accent);
   font-weight: 500;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
 }
 .cert-name {
   font-size: 0.88rem;
@@ -466,19 +547,12 @@ nav {
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-.contact-val {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-}
+.contact-val { font-size: 0.82rem; color: var(--text-dim); }
 .contact-val a { color: var(--blue); }
 .contact-val a:hover { text-decoration: underline; }
 
 /* FOOTER */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 22px 0;
-  text-align: center;
-}
+footer { border-top: 1px solid var(--border); padding: 22px 0; }
 .footer-inner {
   font-family: var(--mono);
   font-size: 0.65rem;
@@ -489,7 +563,6 @@ footer {
   align-items: center;
 }
 
-/* FADE */
 .fade { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .fade.in { opacity: 1; transform: translateY(0); }
 
@@ -501,6 +574,7 @@ footer {
   .hero-name { font-size: 1.9rem; }
   .about-grid { grid-template-columns: 1fr; gap: 24px; }
   .feature-list { grid-template-columns: 1fr; }
+  .learning-grid { grid-template-columns: 1fr; }
   .contact-row { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; gap: 6px; }
 }
@@ -515,6 +589,7 @@ footer {
       <li><a href="#about">About</a></li>
       <li><a href="#stack">Stack</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#learning">Learning</a></li>
       <li><a href="#certifications">Certs</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -533,9 +608,9 @@ footer {
     <h1 class="hero-name">Sparsh Kapil</h1>
     <p class="hero-role">Node.js &nbsp;·&nbsp; PostgreSQL &nbsp;·&nbsp; REST APIs &nbsp;·&nbsp; Cybersecurity</p>
     <p class="hero-bio">
-      Software Engineering student at Delhi Technological University. I build backend systems — 
-      REST APIs, database architecture, and AI-integrated applications. My current focus is 
-      scalable Node.js backends, secure system design, and backend fundamentals through 
+      Software Engineering student at Delhi Technological University. I build backend systems —
+      REST APIs, database architecture, and AI-integrated applications. My current focus is
+      scalable Node.js backends, secure system design, and backend fundamentals through
       structured learning and real project work.
     </p>
     <div class="hero-chips">
@@ -561,14 +636,14 @@ footer {
     <div class="about-grid">
       <div class="about-text">
         <p>
-          I'm a first-year <strong>B.Tech Software Engineering student at DTU (Batch 2029)</strong>, 
+          I'm a first-year <strong>B.Tech Software Engineering student at DTU (Batch 2029)</strong>,
           focused on backend engineering and AI-powered systems.
         </p>
         <p>
-          I'm currently deepening my backend architecture knowledge through 
-          <strong>The Odin Project</strong> and FreeCodeCamp's PostgreSQL track. On the 
-          security side, I'm actively learning <strong>CyberSecurity</strong> 
-          and working through a structured 90-day cybersecurity course on <a href="https://myfirsthack.com">myfirsthack.com</a>
+          I'm currently deepening my backend architecture knowledge through
+          <strong>The Odin Project</strong> and FreeCodeCamp's PostgreSQL track. On the
+          security side, I'm actively learning cybersecurity
+          and working through a structured 90-day course on <a href="https://myfirsthack.com" target="_blank">myfirsthack.com</a>.
         </p>
       </div>
       <div class="meta-list">
@@ -607,9 +682,9 @@ footer {
       <div class="stack-item key"><div class="stack-name">Node.js</div><div class="stack-cat">Runtime</div></div>
       <div class="stack-item key"><div class="stack-name">PostgreSQL</div><div class="stack-cat">Database</div></div>
       <div class="stack-item key"><div class="stack-name">Express.js</div><div class="stack-cat">Framework</div></div>
-      <div class="stack-item key"><div class="stack-name">REST APIs</div><div class="stack-cat">ML / Scripting</div></div>
-      <div class="stack-item"><div class="stack-name">Python</div><div class="stack-cat">Architecture</div></div>
-      <div class="stack-item"><div class="stack-name">JavaScript</div><div class="stack-cat">Language · Certified</div></div>
+      <div class="stack-item key"><div class="stack-name">JavaScript</div><div class="stack-cat">Language · Certified</div></div>
+      <div class="stack-item"><div class="stack-name">Python</div><div class="stack-cat">ML / Scripting</div></div>
+      <div class="stack-item"><div class="stack-name">REST APIs</div><div class="stack-cat">Architecture</div></div>
       <div class="stack-item"><div class="stack-name">C++ / STL</div><div class="stack-cat">DSA / Algorithms</div></div>
       <div class="stack-item"><div class="stack-name">Git / GitHub</div><div class="stack-cat">Version Control</div></div>
       <div class="stack-item"><div class="stack-name">Linux / Bash</div><div class="stack-cat">Systems / Security</div></div>
@@ -630,8 +705,8 @@ footer {
       <div class="project-body">
         <p class="project-desc">
           A production-deployed platform for real-time threat monitoring and safe-route computation.
-          Combines ML-based threat classification with weighted graph pathfinding to navigate users 
-          away from registered threat zones. Includes a background SOS system and live threat map 
+          Combines ML-based threat classification with weighted graph pathfinding to navigate users
+          away from registered threat zones. Includes a background SOS system and live threat map
           visualization, built on a Node.js + PostgreSQL backend with a Python ML pipeline.
         </p>
         <ul class="feature-list">
@@ -646,7 +721,7 @@ footer {
       <div class="project-tags">
         <span class="tag">Node.js</span>
         <span class="tag">PostgreSQL</span>
-	<span class="tag">JavaScript</span>
+        <span class="tag">JavaScript</span>
         <span class="tag">Python</span>
         <span class="tag">REST API</span>
         <span class="tag">ML Pipeline</span>
@@ -655,8 +730,56 @@ footer {
       </div>
       <div class="project-footer">
         <a href="https://github.com/sparsh-kapil08/Safesphere-main" class="btn primary" target="_blank">View on GitHub ↗</a>
-        <a href="https://safesphere-main.vercel.app" class="btn primary" target="_blank">Deployed Website↗</a>
+        <a href="https://safesphere-main.vercel.app" class="btn" target="_blank">Live Demo ↗</a>
       </div>
+    </div>
+  </section>
+
+  <!-- CURRENTLY LEARNING -->
+  <section class="section fade" id="learning">
+    <div class="section-label">Currently Learning</div>
+    <div class="learning-grid">
+
+      <div class="learn-item backend">
+        <div class="learn-icon">BE</div>
+        <div class="learn-content">
+          <div class="learn-title">Node.js Backend Architecture</div>
+          <div class="learn-source">The Odin Project</div>
+          <div class="learn-bar-wrap"><div class="learn-bar" style="width: 35%"></div></div>
+          <div class="learn-pct">In progress · Express, Auth, MVC, Testing</div>
+        </div>
+      </div>
+
+      <div class="learn-item backend">
+        <div class="learn-icon">DB</div>
+        <div class="learn-content">
+          <div class="learn-title">Relational Databases &amp; PostgreSQL</div>
+          <div class="learn-source">freeCodeCamp</div>
+          <div class="learn-bar-wrap"><div class="learn-bar" style="width: 50%"></div></div>
+          <div class="learn-pct">In progress · SQL, Indexing, Bash, Git</div>
+        </div>
+      </div>
+
+      <div class="learn-item security">
+        <div class="learn-icon">CS</div>
+        <div class="learn-content">
+          <div class="learn-title">Cybersecurity Fundamentals</div>
+          <div class="learn-source">myfirsthack.com · 90-Day Course</div>
+          <div class="learn-bar-wrap"><div class="learn-bar" style="width: 20%"></div></div>
+          <div class="learn-pct">In progress · Networking, Exploits, Linux</div>
+        </div>
+      </div>
+
+      <div class="learn-item dsa">
+        <div class="learn-icon">DS</div>
+        <div class="learn-content">
+          <div class="learn-title">Data Structures &amp; Algorithms</div>
+          <div class="learn-source">LeetCode · C++</div>
+          <div class="learn-bar-wrap"><div class="learn-bar" style="width: 10%"></div></div>
+          <div class="learn-pct">Starting · Arrays, HashMaps, STL</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -689,10 +812,10 @@ footer {
 
       <div class="cert-item">
         <div class="cert-left">
-          <div class="cert-icon">DL</div>
+          <div class="cert-icon">TA</div>
           <div>
-            <div class="cert-name">Cyber Job Simulation</div>
-            <div class="cert-issuer">TATA</div>
+            <div class="cert-name">Cybersecurity Analyst Job Simulation</div>
+            <div class="cert-issuer">Tata · Forage</div>
           </div>
         </div>
         <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gmf3ypEXBj2wvfQWC_ifobHAoMjQs9s6bKS_69c7d367fb4e936617ef5656_1778606386734_completion_certificate.pdf" class="cert-link" target="_blank">View Certificate ↗</a>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparsh Kapil — Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0C0F;
+  --surface: #0F1318;
+  --surface2: #141920;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.12);
+  --accent: #00C98D;
+  --accent-dim: rgba(0,201,141,0.08);
+  --accent-border: rgba(0,201,141,0.2);
+  --blue: #3B9EFF;
+  --blue-dim: rgba(59,158,255,0.08);
+  --blue-border: rgba(59,158,255,0.2);
+  --text: #E2E8F0;
+  --text-muted: #64748B;
+  --text-dim: #94A3B8;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); }
+
+/* LAYOUT */
+.container { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,12,15,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+}
+.nav-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+}
+.nav-id {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+.dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 2.4s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100% { opacity:1; } 50% { opacity:0.3; }
+}
+
+/* HERO */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-pre {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-pre::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--accent);
+  display: block;
+}
+.hero-name {
+  font-family: var(--sans);
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.hero-role {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+}
+.hero-bio {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: 32px;
+}
+.hero-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.chip {
+  font-family: var(--mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.5px;
+  padding: 4px 11px;
+  border-radius: 3px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  background: var(--surface);
+}
+.chip.hi {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+.hero-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 9px 22px;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn:hover { border-color: var(--accent-border); color: var(--accent); background: var(--accent-dim); }
+.btn.primary {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+.btn.primary:hover {
+  background: rgba(0,201,141,0.15);
+  border-color: var(--accent);
+}
+
+/* SECTION */
+.section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+.section:last-of-type { border-bottom: none; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ABOUT GRID */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.about-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; }
+.about-text p + p { margin-top: 12px; }
+.about-text strong { color: var(--text); font-weight: 500; }
+
+.meta-list { display: flex; flex-direction: column; gap: 2px; }
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+}
+.meta-row:first-child { border-radius: 6px 6px 0 0; }
+.meta-row:last-child { border-radius: 0 0 6px 6px; }
+.meta-k { font-family: var(--mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+.meta-v { color: var(--text-dim); font-size: 0.8rem; }
+.meta-v a { color: var(--blue); }
+.meta-v a:hover { text-decoration: underline; }
+
+/* STACK */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 8px;
+}
+.stack-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 14px 16px;
+  transition: all 0.18s;
+}
+.stack-item:hover {
+  border-color: var(--border-strong);
+  background: var(--surface2);
+}
+.stack-name {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+.stack-cat {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.stack-item.key { border-color: var(--accent-border); }
+.stack-item.key .stack-name { color: var(--accent); }
+
+/* PROJECT */
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.project-card:hover { border-color: var(--border-strong); }
+
+.project-header {
+  padding: 24px 26px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+.project-title {
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.project-sub {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.project-badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 4px 10px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 3px;
+  color: var(--accent);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+.project-body { padding: 16px 26px 0; }
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+.feature-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  margin-bottom: 20px;
+}
+.feature-list li {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.feature-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 26px;
+  margin-bottom: 0;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 3px 9px;
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-border);
+  border-radius: 3px;
+  color: var(--blue);
+  letter-spacing: 0.3px;
+}
+.project-footer {
+  padding: 18px 26px;
+  border-top: 1px solid var(--border);
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+/* CERTS */
+.cert-list { display: flex; flex-direction: column; gap: 8px; }
+.cert-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.18s;
+}
+.cert-item:hover { border-color: var(--border-strong); }
+.cert-left { display: flex; align-items: center; gap: 14px; }
+.cert-icon {
+  width: 36px; height: 36px;
+  background: var(--surface2);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  color: var(--accent);
+  font-weight: 500;
+}
+.cert-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.cert-issuer {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.cert-link {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.cert-link:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* CONTACT */
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.contact-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.18s;
+}
+.contact-item:hover { border-color: var(--border-strong); }
+.contact-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.contact-val {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.contact-val a { color: var(--blue); }
+.contact-val a:hover { text-decoration: underline; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 22px 0;
+  text-align: center;
+}
+.footer-inner {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* FADE */
+.fade { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade.in { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 680px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .container { padding: 0 20px; }
+  .hero { padding: 48px 0 40px; }
+  .hero-name { font-size: 1.9rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 24px; }
+  .feature-list { grid-template-columns: 1fr; }
+  .contact-row { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-id">sparsh_kapil.dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="dot"></span>
+      <span>Delhi, India</span>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero fade">
+    <div class="hero-pre">Backend Developer</div>
+    <h1 class="hero-name">Sparsh Kapil</h1>
+    <p class="hero-role">Node.js &nbsp;·&nbsp; PostgreSQL &nbsp;·&nbsp; REST APIs &nbsp;·&nbsp; Cybersecurity</p>
+    <p class="hero-bio">
+      Software Engineering student at Delhi Technological University. I build backend systems — 
+      REST APIs, database architecture, and AI-integrated applications. My current focus is 
+      scalable Node.js backends, secure system design, and backend fundamentals through 
+      structured learning and real project work.
+    </p>
+    <div class="hero-chips">
+      <span class="chip hi">Node.js</span>
+      <span class="chip hi">PostgreSQL</span>
+      <span class="chip hi">REST APIs</span>
+      <span class="chip hi">JavaScript</span>
+      <span class="chip">C++</span>
+      <span class="chip">Linux</span>
+      <span class="chip">Git</span>
+      <span class="chip">Cloud Deploy</span>
+    </div>
+    <div class="hero-links">
+      <a href="https://github.com/sparsh-kapil08" class="btn primary" target="_blank">GitHub ↗</a>
+      <a href="https://linkedin.com/in/sparsh-kapil" class="btn" target="_blank">LinkedIn ↗</a>
+      <a href="mailto:sparshkapil2008@gmail.com" class="btn">Email</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section fade" id="about">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a first-year <strong>B.Tech Software Engineering student at DTU (Batch 2029)</strong>, 
+          focused on backend engineering and AI-powered systems.
+        </p>
+        <p>
+          My flagship project, <strong>SafeSphere AI</strong>, is a production-deployed platform 
+          combining threat detection, ML-based classification, and weighted pathfinding for 
+          real-time safe-route navigation — built on Node.js, Python, and PostgreSQL.
+        </p>
+        <p>
+          I'm currently deepening my backend architecture knowledge through 
+          <strong>The Odin Project</strong> and FreeCodeCamp's PostgreSQL track. On the 
+          security side, I'm an actively learning <strong>CyberSecurity</strong> 
+          and working through a structured 90-day cybersecurity course on <a href="https://myfirsthack.com">myfirsthack.com</a>
+        </p>
+      </div>
+      <div class="meta-list">
+        <div class="meta-row">
+          <span class="meta-k">University</span>
+          <span class="meta-v">Delhi Technological University</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Degree</span>
+          <span class="meta-v">B.Tech Software Engineering</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Batch</span>
+          <span class="meta-v">2025 – 2029</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Location</span>
+          <span class="meta-v">Delhi NCR, India</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">Email</span>
+          <span class="meta-v"><a href="mailto:sparshkapil2008@gmail.com">sparshkapil2008@gmail.com</a></span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-k">LinkedIn</span>
+          <span class="meta-v"><a href="https://linkedin.com/in/sparsh-kapil" target="_blank">linkedin.com/in/sparsh-kapil</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section fade" id="stack">
+    <div class="section-label">Technical Stack</div>
+    <div class="stack-grid">
+      <div class="stack-item key"><div class="stack-name">Node.js</div><div class="stack-cat">Runtime</div></div>
+      <div class="stack-item key"><div class="stack-name">PostgreSQL</div><div class="stack-cat">Database</div></div>
+      <div class="stack-item key"><div class="stack-name">Express.js</div><div class="stack-cat">Framework</div></div>
+      <div class="stack-item key"><div class="stack-name">Python</div><div class="stack-cat">ML / Scripting</div></div>
+      <div class="stack-item"><div class="stack-name">REST APIs</div><div class="stack-cat">Architecture</div></div>
+      <div class="stack-item"><div class="stack-name">JavaScript</div><div class="stack-cat">Language · Certified</div></div>
+      <div class="stack-item"><div class="stack-name">C++ / STL</div><div class="stack-cat">DSA / Algorithms</div></div>
+      <div class="stack-item"><div class="stack-name">Git / GitHub</div><div class="stack-cat">Version Control</div></div>
+      <div class="stack-item"><div class="stack-name">Linux / Bash</div><div class="stack-cat">Systems / Security</div></div>
+      <div class="stack-item"><div class="stack-name">Cloud Infra</div><div class="stack-cat">Deployment</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section fade" id="projects">
+    <div class="section-label">Projects</div>
+    <div class="project-card">
+      <div class="project-header">
+        <div>
+          <div class="project-title">SafeSphere AI</div>
+          <div class="project-sub">Threat Detection &amp; Safe-Route Navigation Platform</div>
+        </div>
+        <span class="project-badge">Live · Open Source</span>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">
+          A production-deployed platform for real-time threat monitoring and safe-route computation.
+          Combines ML-based threat classification with weighted graph pathfinding to navigate users 
+          away from registered threat zones. Includes a background SOS system and live threat map 
+          visualization, built on a Node.js + PostgreSQL backend with a Python ML pipeline.
+        </p>
+        <ul class="feature-list">
+          <li>Real-time threat map with live data ingestion</li>
+          <li>Weighted pathfinding for safest-route computation</li>
+          <li>ML model integration for threat classification</li>
+          <li>Background SOS system with push notifications</li>
+          <li>REST API backend with PostgreSQL persistence</li>
+          <li>Deployed on cloud infrastructure</li>
+        </ul>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">PostgreSQL</span>
+	<span class="tag">JavaScript</span>
+        <span class="tag">Python</span>
+        <span class="tag">REST API</span>
+        <span class="tag">ML Pipeline</span>
+        <span class="tag">Pathfinding</span>
+        <span class="tag">Cloud Deploy</span>
+      </div>
+      <div class="project-footer">
+        <a href="https://github.com/sparsh-kapil08/Safesphere-main" class="btn primary" target="_blank">View on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="section fade" id="certifications">
+    <div class="section-label">Certifications</div>
+    <div class="cert-list">
+
+      <div class="cert-item">
+        <div class="cert-left">
+          <div class="cert-icon">JS</div>
+          <div>
+            <div class="cert-name">JavaScript Algorithms &amp; Data Structures</div>
+            <div class="cert-issuer">freeCodeCamp</div>
+          </div>
+        </div>
+        <a href="https://www.freecodecamp.org/certification/sparshkapil/javascript-v9" class="cert-link" target="_blank">View Certificate ↗</a>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-left">
+          <div class="cert-icon">CS</div>
+          <div>
+            <div class="cert-name">Introduction to Cybersecurity</div>
+            <div class="cert-issuer">Cisco Networking Academy</div>
+          </div>
+        </div>
+        <a href="https://cisco.com/certification/placeholder" class="cert-link" target="_blank">View Certificate ↗</a>
+      </div>
+
+      <div class="cert-item">
+        <div class="cert-left">
+          <div class="cert-icon">DL</div>
+          <div>
+            <div class="cert-name">Cyber Job Simulation</div>
+            <div class="cert-issuer">TATA</div>
+          </div>
+        </div>
+        <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gmf3ypEXBj2wvfQWC_ifobHAoMjQs9s6bKS_69c7d367fb4e936617ef5656_1778606386734_completion_certificate.pdf" class="cert-link" target="_blank">View Certificate ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section fade" id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <span class="contact-val"><a href="mailto:sparshkapil2008@gmail.com">sparshkapil2008@gmail.com</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-val"><a href="https://linkedin.com/in/sparsh-kapil" target="_blank">linkedin.com/in/sparsh-kapil</a></span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">GitHub</span>
+        <span class="contact-val"><a href="https://github.com/sparsh-kapil08" target="_blank">github.com/sparsh-kapil08</a></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>Sparsh Kapil · Software Engineering · DTU · 2025–2029</span>
+      <span>Delhi, India</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
